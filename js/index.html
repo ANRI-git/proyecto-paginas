@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendario de eventos</title>
+
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
+
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  </head>
+  <body>
+    <!-- Contenedor del calendario -->
+    <div id="calendar"></div>
+
+    <!-- JavaScript para renderizar el calendario -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+
+        // Petición AJAX para obtener los eventos desde PHP
+        fetch('calendar.php')
+          .then(response => response.json())
+          .then(events => {
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+              initialView: 'dayGridMonth',
+              events: events, // Usar los eventos que devuelve PHP
+            });
+
+            calendar.render();
+          })
+          .catch(error => console.error('Error al cargar eventos:', error));
+      });
+    </script>
+  </body>
+</html>
